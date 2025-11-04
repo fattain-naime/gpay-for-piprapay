@@ -26,14 +26,27 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 1. Download the plugin from ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/fattain-naime/gpay-for-piprapay/latest/total) or the provided ZIP file and place it in your PipraPay Admin panel plugin uploader or installation under `pp-content/plugins/payment-gateway`.
 2. Activate **Google Pay Direct** from the PipraPay admin panel.
 3. Go to **Payment Gateways → Google Pay** and configure:
-   - **Mode:** `Sandbox` for testing or `Live` for production.
-   - **Merchant Name:** The business name shown to users.
-   - **Merchant ID:** Required in production but **not needed in the test environment**【846602639542790†L204-L208】.
-   - **Public Key (ECv2):** Your Base64‑encoded 65‑byte uncompressed P‑256 public key (begins with `B` or `Q`)【77782387575752†L600-L609】. See the [Google Pay crypto guide](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography) for key generation.
-   - You can use the ECv2 test key for check
+
+| Setting                           | Description                                                      |
+| --------------------------------- | ---------------------------------------------------------------- |
+| **Mode**                          | `Sandbox` for testing, `Live` for real payments.                 |
+| **Merchant Name**                 | The display name shown to customers.                             |
+| **Merchant ID**                   | Required only in `Live` mode (omit in `Sandbox`).                |
+| **ECv2 Public Key**               | Your Base64-encoded **uncompressed P-256 (65-byte)** public key. |
+| **Fixed Charge / Percent Charge** | Define your fees per transaction.                                |
+| **Currency**                      | Supported currencies (default: USD).                             |
+
+- **Public Key (ECv2):** Your Base64‑encoded 65‑byte uncompressed P‑256 public key (begins with `B` or `Q`)【77782387575752†L600-L609】. See the [Google Pay crypto guide](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography) for key generation.
+   - You can use the ECv2 test key for Sandbox
    ```sh
    BBpye2KNbF/W+JK+AGubqufCUUH8w/GyCV8O1l2mqf4VRPj5xcb48eJ1cbe/UnUblFXrvvh2Q9HBgL+CDs53Pes=
    ```
+## Google Pay Requirements
+- **Sandbox**: No ```merchantId``` required just a name.   
+   - _(As per Google Pay [API docs](https://codelabs.developers.google.com/codelabs/gpay-web-101#0))_   
+- **Production**: Both ```merchantId``` and ```merchantName``` are required.   
+- **Public Key Format**: Must be Base64 encoded, 65 bytes, starts with byte 0x04 (uncompressed EC point).   
+   - _(Per Payment [Data Cryptography](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography))_
 
 ## Usage
 
@@ -44,6 +57,22 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
   1. Use your private key to decrypt the ECv2 token and verify its signature【77782387575752†L600-L609】.
   2. Submit the extracted card data and cryptogram to your acquirer for authorization.
   3. Update the transaction in PipraPay from **pending** to **completed** with the acquirer’s authorization ID.
+
+## How It Works
+
+- Customer clicks “Pay with GPay” on checkout.
+- The Google Pay API returns an encrypted ECv2 token.
+- The plugin:
+   - Posts token to your backend (ecv2-decrypt-stub.php).
+   - In Sandbox → simulates success.
+   - In Production → expects decrypted PAN + cryptogram from your server.
+- You send this data to your acquirer or payment processor for final authorization.
+
+## ECv2 Decryption (Production)
+
+Replace the contents of ```ecv2-decrypt-stub.php``` with your actual decryption logic.   
+Follow Google’s guide:
+[Payment Data Cryptography for Google Pay](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography?utm_source=chatgpt.com)
 
 ## Generating your public/private keys
 
@@ -62,18 +91,12 @@ Use the contents of `publicKey.txt` as your **Public Key (ECv2)** in the plugin 
 
 ## Troubleshooting
 
-- **OR_BIBED_06: “This merchant is having trouble accepting your payment…”**  
-  - Ensure you are in `Sandbox` mode and have not set a Merchant ID【846602639542790†L204-L208】.  
-  - Double‑check that your public key is the Base64‑encoded uncompressed key【77782387575752†L600-L609】 – not a PEM or DER string.  
-  - Verify that your checkout page is served over HTTPS.
+| Issue                          | Possible Cause                                          |
+| ------------------------------ | ------------------------------------------------------- |
+| “Request Failed [OR_BIBED_06]” | Invalid ECv2 key format (SPKI instead of uncompressed). |
+| Payment stays “Pending”        | No server-side decrypt or acquirer auth implemented.    |
+| Button not visible             | Google Pay not available on current device/browser.     |
 
-- **The button does not appear:**  
-  - Confirm that the customer has Google Pay available on their device and browser.  
-  - Check the browser console for errors. The plugin logs readiness and token errors.
-
-## Contributing
-
-Contributions are welcome! Please open issues or pull requests on GitHub to report bugs or suggest improvements.
 
 ## License
 
