@@ -1,6 +1,6 @@
 # Google Pay Direct – PipraPay Gateway
 
-![Google Pay logo](assets/icon.png)
+![Google Pay logo](assets/icon.png) ![Google Pay logo](assets/piprapay.png)
 
 Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapay.com/) platform. It enables your customers to pay with their saved cards in Google Pay using **Direct tokenization (ECv2)**. With Direct tokenization you receive an encrypted payment token and process the card transaction yourself via your acquirer.
 ## Screenshot
@@ -23,7 +23,7 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 
 ## Installation
 
-1. Download the plugin from [letest relese]([url](https://github.com/fattain-naime/gpay-for-piprapay/releases)) or the provided ZIP file and place it in your PipraPay Admin panel plugin uploader or installation under `pp-content/plugins/payment-gateway`.
+1. Download the plugin from ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/fattain-naime/gpay-for-piprapay/latest/total) or the provided ZIP file and place it in your PipraPay Admin panel plugin uploader or installation under `pp-content/plugins/payment-gateway`.
 2. Activate **Google Pay Direct** from the PipraPay admin panel.
 3. Go to **Payment Gateways → Google Pay** and configure:
    - **Mode:** `Sandbox` for testing or `Live` for production.
@@ -76,5 +76,7 @@ Use the contents of `publicKey.txt` as your **Public Key (ECv2)** in the plugin 
 Contributions are welcome! Please open issues or pull requests on GitHub to report bugs or suggest improvements.
 
 ## License
-
+![GitHub License](https://img.shields.io/github/license/fattain-naime/gpay-for-piprapay)   
 This project is licensed under the [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html) license.
+
+![GitHub Release](https://img.shields.io/github/v/release/fattain-naime/gpay-for-piprapay)  ![GitHub Repo stars](https://img.shields.io/github/stars/fattain-naime/gpay-for-piprapay)  ![Website](https://img.shields.io/website?url=https%3A%2F%2Fpiprapay.com)  ![GitHub branch status](https://img.shields.io/github/checks-status/fattain-naime/gpay-for-piprapay/main) ![GitHub contributors](https://img.shields.io/github/contributors/fattain-naime/gpay-for-piprapay)
