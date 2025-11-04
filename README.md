@@ -3,6 +3,12 @@
 ![Google Pay logo](assets/icon.png)
 
 Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapay.com/) platform. It enables your customers to pay with their saved cards in Google Pay using **Direct tokenization (ECv2)**. With Direct tokenization you receive an encrypted payment token and process the card transaction yourself via your acquirer.
+## Screenshot
+**Desktop View**  
+![Mobile View](assets/desktopview.png)  
+
+**Mobile View**  
+![Mobile View](assets/mobileview.png)
 
 ## Features
 
