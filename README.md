@@ -76,7 +76,7 @@ Use the contents of `publicKey.txt` as your **Public Key (ECv2)** in the plugin 
 Contributions are welcome! Please open issues or pull requests on GitHub to report bugs or suggest improvements.
 
 ## License
-![GitHub License](https://img.shields.io/github/license/fattain-naime/gpay-for-piprapay)   
+
 This project is licensed under the [GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html) license.
 
-![GitHub Release](https://img.shields.io/github/v/release/fattain-naime/gpay-for-piprapay)  ![GitHub Repo stars](https://img.shields.io/github/stars/fattain-naime/gpay-for-piprapay)  ![Website](https://img.shields.io/website?url=https%3A%2F%2Fpiprapay.com)  ![GitHub branch status](https://img.shields.io/github/checks-status/fattain-naime/gpay-for-piprapay/main) ![GitHub contributors](https://img.shields.io/github/contributors/fattain-naime/gpay-for-piprapay)
+![GitHub License](https://img.shields.io/github/license/fattain-naime/gpay-for-piprapay)  ![GitHub Release](https://img.shields.io/github/v/release/fattain-naime/gpay-for-piprapay)  ![GitHub Repo stars](https://img.shields.io/github/stars/fattain-naime/gpay-for-piprapay)  ![Website](https://img.shields.io/website?url=https%3A%2F%2Fpiprapay.com)  ![GitHub branch status](https://img.shields.io/github/checks-status/fattain-naime/gpay-for-piprapay/main) ![GitHub contributors](https://img.shields.io/github/contributors/fattain-naime/gpay-for-piprapay)
