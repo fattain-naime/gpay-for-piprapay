@@ -5,7 +5,6 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 ## Screenshot
 **Desktop View**  
 ![Mobile View](assets/desktopview.png)  
-
 **Mobile View**  
 ![Mobile View](assets/mobileview.png)
 
@@ -14,8 +13,8 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 - Accept payments from Google Pay using Direct tokenization (ECv2).
 - Supports **Sandbox** and **Production** modes.
 - Customizable display name, min/max amounts, fixed and percent fees.
-- Merchant name and optional Merchant ID (required in production, optional in test)【846602639542790†L204-L208】.
-- ECv2 public key configuration – store your 65‑byte uncompressed P‑256 key【77782387575752†L600-L609】.
+- Merchant name and optional Merchant ID (`required in production`, `optional in test`).
+- ECv2 public key configuration store your 65‑byte uncompressed P‑256 key.
 - Built-in **sandbox simulator**: automatically marks transactions complete for testing.
 - Server‑side ECv2 decrypt stub included; replace with your own implementation when you go live.
 - Responsive checkout UI with a **Pay with GPay** button.
@@ -33,14 +32,14 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 | **Merchant ID**                   | Required only in `Live` mode (omit in `Sandbox`).                |
 | **ECv2 Public Key**               | Your Base64-encoded **uncompressed P-256 (65-byte)** public key. |
 | **Fixed Charge / Percent Charge** | Define your fees per transaction.                                |
-| **Currency**                      | Supported currencies (default: USD).                             |
 
-- **Public Key (ECv2):** Your Base64‑encoded 65‑byte uncompressed P‑256 public key (begins with `B` or `Q`)【77782387575752†L600-L609】. See the [Google Pay crypto guide](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography) for key generation.
+> **Public Key (ECv2):** Your Base64‑encoded 65‑byte uncompressed P‑256 public key (begins with `B` or `Q`). See the [Google Pay crypto guide](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography) for key generation.
    - You can use the ECv2 test key for Sandbox
    ```sh
    BBpye2KNbF/W+JK+AGubqufCUUH8w/GyCV8O1l2mqf4VRPj5xcb48eJ1cbe/UnUblFXrvvh2Q9HBgL+CDs53Pes=
    ```
 ## Google Pay Requirements
+
 - **Sandbox**: No ```merchantId``` required just a name.   
    - _(As per Google Pay [API docs](https://codelabs.developers.google.com/codelabs/gpay-web-101#0))_   
 - **Production**: Both ```merchantId``` and ```merchantName``` are required.   
@@ -53,25 +52,27 @@ Google Pay Direct is a payment gateway plugin for the [PipraPay](https://piprapa
 - The plugin uses the official Google Pay Web SDK to check readiness (`isReadyToPay`) and then requests payment data (`loadPaymentData`).
 - In Sandbox mode, after the customer authorizes the payment, the plugin automatically simulates authorization and marks the transaction **Completed**.
 - In Live mode the plugin posts the encrypted token to your server and leaves the transaction **Pending**. You must:
-  1. Use your private key to decrypt the ECv2 token and verify its signature【77782387575752†L600-L609】.
+  1. Use your private key to decrypt the ECv2 token and verify its signature.
   2. Submit the extracted card data and cryptogram to your acquirer for authorization.
   3. Update the transaction in PipraPay from **pending** to **completed** with the acquirer’s authorization ID.
 
 ## How It Works
 
-- Customer clicks “Pay with GPay” on checkout.
-- The Google Pay API returns an encrypted ECv2 token.
-- The plugin:
+1. Customer clicks “Pay with GPay” on checkout.
+2. The Google Pay API returns an encrypted ECv2 token.
+3. The plugin:
    - Posts token to your backend (ecv2-decrypt-stub.php).
    - In Sandbox → simulates success.
    - In Production → expects decrypted PAN + cryptogram from your server.
-- You send this data to your acquirer or payment processor for final authorization.
+4. You send this data to your acquirer or payment processor for final authorization.
 
 ## ECv2 Decryption (Production)
 
-Replace the contents of ```ecv2-decrypt-stub.php``` with your actual decryption logic.   
-Follow Google’s guide:
-[Payment Data Cryptography for Google Pay](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography?utm_source=chatgpt.com)
+> [!CAUTION]
+> Replace the contents of ```ecv2-decrypt-stub.php``` with your actual decryption logic.   
+
+> [!TIP]
+> Follow Google’s guide: [Payment Data Cryptography for Google Pay](https://developers.google.com/pay/api/web/guides/resources/payment-data-cryptography?utm_source=chatgpt.com)
 
 ## Generating your public/private keys
 
