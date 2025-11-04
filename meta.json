@@ -1,0 +1,6 @@
+{
+  "type": "plugins",
+  "slug": "gpay-direct",
+  "name": "Google Pay",
+  "mrdr": "payment-gateway"
+}
